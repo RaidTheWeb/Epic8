@@ -1,0 +1,27 @@
+; push HELLO to stack in FIFO order
+PUSH 'H'
+
+PUSH 'E'
+
+PUSH 'L'
+
+PUSH 'L'
+
+PUSH 'O'
+
+
+; infinite loop for printing chars
+.printChar:
+	; pop from first element in stack (FIFO) and store it in D
+	POPL D
+	; call 0x10 display interrupt
+	CMD 0x10
+	; grab last element in stack (without popping) and store it in D
+	PEEK D
+	; check if D is equal to NULL (0x00) if so, skip next instruction (JMP printChar)
+	JNULL D
+	; set program pointer to "printChar" label in memory
+	JMP printChar
+
+; hang CPU infinitely 
+JMP $
